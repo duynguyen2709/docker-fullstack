@@ -12,7 +12,7 @@ services:
       interval: 20s
       timeout: 5s
       retries: 5
-      start_period: 30s
+      start_period: 20s
 
   frontend:
     build:
@@ -34,7 +34,8 @@ services:
       - ./nginx/error.log:/var/log/nginx/error.log
       - frontend_build:/usr/share/nginx/html
     depends_on:
-      - "backend"
+      backend:
+        condition: service_started
     links:
       - "backend"
 
